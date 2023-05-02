@@ -42,6 +42,8 @@ dependencies:
   auto_route: ^5.0.4
   freezed_annotation: ^2.2.0
   json_serializable: ^6.6.1
+  google_fonts: ^4.0.4
+  pinput: ^2.2.31
 
 dev_dependencies:
   flutter_test:

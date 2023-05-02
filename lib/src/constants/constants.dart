@@ -1,3 +1,3 @@
 import 'dart:core';
 
-Duration spalshScreenDuration = const Duration(milliseconds: 2000);
+const Duration spalshScreenDuration = Duration(milliseconds: 2000);

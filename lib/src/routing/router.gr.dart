@@ -14,10 +14,10 @@
 import 'package:auto_route/auto_route.dart' as _i5;
 import 'package:flutter/material.dart' as _i6;
 
-import '../ui/auth/auth_page.dart' as _i2;
-import '../ui/create_profile/create_profile_page.dart' as _i3;
-import '../ui/home/home_page.dart' as _i4;
-import '../ui/splash/splash_page.dart' as _i1;
+import '../ui/auth/auth_view.dart' as _i2;
+import '../ui/create_profile/create_profile_view.dart' as _i3;
+import '../ui/home/home_view.dart' as _i4;
+import '../ui/splash/splash_view.dart' as _i1;
 
 class AppRouter extends _i5.RootStackRouter {
   AppRouter([_i6.GlobalKey<_i6.NavigatorState>? navigatorKey])
@@ -28,25 +28,25 @@ class AppRouter extends _i5.RootStackRouter {
     SplashRoute.name: (routeData) {
       return _i5.MaterialPageX<dynamic>(
         routeData: routeData,
-        child: const _i1.SplashPage(),
+        child: const _i1.SplashView(),
       );
     },
     AuthRoute.name: (routeData) {
       return _i5.MaterialPageX<dynamic>(
         routeData: routeData,
-        child: const _i2.AuthPage(),
+        child: const _i2.AuthView(),
       );
     },
     CreateProfileRoute.name: (routeData) {
       return _i5.MaterialPageX<dynamic>(
         routeData: routeData,
-        child: const _i3.CreateProfilePage(),
+        child: const _i3.CreateProfileView(),
       );
     },
     HomeRoute.name: (routeData) {
       return _i5.MaterialPageX<dynamic>(
         routeData: routeData,
-        child: const _i4.HomePage(),
+        child: const _i4.HomeView(),
       );
     },
   };
@@ -73,7 +73,7 @@ class AppRouter extends _i5.RootStackRouter {
 }
 
 /// generated route for
-/// [_i1.SplashPage]
+/// [_i1.SplashView]
 class SplashRoute extends _i5.PageRouteInfo<void> {
   const SplashRoute()
       : super(
@@ -85,7 +85,7 @@ class SplashRoute extends _i5.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i2.AuthPage]
+/// [_i2.AuthView]
 class AuthRoute extends _i5.PageRouteInfo<void> {
   const AuthRoute()
       : super(
@@ -97,7 +97,7 @@ class AuthRoute extends _i5.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i3.CreateProfilePage]
+/// [_i3.CreateProfileView]
 class CreateProfileRoute extends _i5.PageRouteInfo<void> {
   const CreateProfileRoute()
       : super(
@@ -109,7 +109,7 @@ class CreateProfileRoute extends _i5.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i4.HomePage]
+/// [_i4.HomeView]
 class HomeRoute extends _i5.PageRouteInfo<void> {
   const HomeRoute()
       : super(

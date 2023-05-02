@@ -1,7 +1,8 @@
+
 import 'package:flutter/material.dart';
 
-class CreateProfilePage extends StatelessWidget {
-  const CreateProfilePage({super.key});
+class CreateProfileView extends StatelessWidget {
+  const CreateProfileView({super.key});
 
   @override
   Widget build(BuildContext context) {

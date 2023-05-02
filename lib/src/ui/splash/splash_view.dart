@@ -5,14 +5,14 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../logic/repositories/app_repository.dart';
 import '../../routing/router.gr.dart';
 
-class SplashPage extends ConsumerStatefulWidget {
-  const SplashPage({super.key});
+class SplashView extends ConsumerStatefulWidget {
+  const SplashView({super.key});
 
   @override
-  ConsumerState<SplashPage> createState() => _SplashPageState();
+  ConsumerState<SplashView> createState() => _SplashViewState();
 }
 
-class _SplashPageState extends ConsumerState<SplashPage> {
+class _SplashViewState extends ConsumerState<SplashView> {
   @override
   Widget build(BuildContext context) {
     ref.listen(
