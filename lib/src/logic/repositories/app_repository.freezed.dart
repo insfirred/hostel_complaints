@@ -100,7 +100,7 @@ class __$$_AppStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_AppState implements _AppState {
+class _$_AppState with DiagnosticableTreeMixin implements _AppState {
   const _$_AppState({this.authUser = null, this.appStatus = AppStatus.initial});
 
   @override
@@ -111,8 +111,17 @@ class _$_AppState implements _AppState {
   final AppStatus? appStatus;
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'AppState(authUser: $authUser, appStatus: $appStatus)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'AppState'))
+      ..add(DiagnosticsProperty('authUser', authUser))
+      ..add(DiagnosticsProperty('appStatus', appStatus));
   }
 
   @override
