@@ -16,7 +16,7 @@ import 'package:flutter/material.dart' as _i7;
 
 import '../ui/auth/auth_view.dart' as _i2;
 import '../ui/complaints/electricity/electricity_complaint_view.dart' as _i5;
-import '../ui/create_profile/create_profile_view.dart' as _i3;
+import '../ui/create_user/create_user_view.dart' as _i3;
 import '../ui/home/home_view.dart' as _i4;
 import '../ui/splash/splash_view.dart' as _i1;
 
@@ -38,10 +38,10 @@ class AppRouter extends _i6.RootStackRouter {
         child: const _i2.AuthView(),
       );
     },
-    CreateProfileRoute.name: (routeData) {
+    CreateUserRoute.name: (routeData) {
       return _i6.MaterialPageX<dynamic>(
         routeData: routeData,
-        child: const _i3.CreateProfileView(),
+        child: const _i3.CreateUserView(),
       );
     },
     HomeRoute.name: (routeData) {
@@ -69,8 +69,8 @@ class AppRouter extends _i6.RootStackRouter {
           path: 'auth',
         ),
         _i6.RouteConfig(
-          CreateProfileRoute.name,
-          path: 'create-profile',
+          CreateUserRoute.name,
+          path: 'create-user',
         ),
         _i6.RouteConfig(
           HomeRoute.name,
@@ -108,15 +108,15 @@ class AuthRoute extends _i6.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i3.CreateProfileView]
-class CreateProfileRoute extends _i6.PageRouteInfo<void> {
-  const CreateProfileRoute()
+/// [_i3.CreateUserView]
+class CreateUserRoute extends _i6.PageRouteInfo<void> {
+  const CreateUserRoute()
       : super(
-          CreateProfileRoute.name,
-          path: 'create-profile',
+          CreateUserRoute.name,
+          path: 'create-user',
         );
 
-  static const String name = 'CreateProfileRoute';
+  static const String name = 'CreateUserRoute';
 }
 
 /// generated route for

@@ -1,9 +1,12 @@
 import 'dart:async';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:hostel_complaints/src/logic/services/firestore.dart';
+import 'package:hostel_complaints/src/ui/auth/auth_view_model.dart';
 
 import '../../constants/constants.dart';
 import '../services/firebase_auth.dart';
@@ -13,15 +16,21 @@ part 'app_repository.freezed.dart';
 final appRepositoryProvider = StateNotifierProvider<AppRepository, AppState>(
   (ref) => AppRepository(
     firebaseAuth: ref.watch(firebaseAuthProvider),
+    firestore: ref.watch(firestoreProvider),
+    ref: ref,
   ),
 );
 
 class AppRepository extends StateNotifier<AppState> {
   final FirebaseAuth firebaseAuth;
+  final FirebaseFirestore firestore;
   late final StreamSubscription _subscription;
+  final StateNotifierProviderRef ref;
 
   AppRepository({
     required this.firebaseAuth,
+    required this.firestore,
+    required this.ref,
   }) : super(const AppState()) {
     () async {
       await Future.delayed(spalshScreenDuration);
@@ -39,17 +48,19 @@ class AppRepository extends StateNotifier<AppState> {
           }
         },
       );
-      // state = state.copyWith(
-      //   appStatus: AppStatus.unauthenticated,
-      // );
     }();
   }
 
+  setAppStatus(AppStatus status) => state = state.copyWith(
+        appStatus: status,
+      );
+
   /// fetches user data from server & sets the state
   _fetchUserDataAndSetState(User? user) async {
-    final idToken = await user?.getIdToken();
-    debugPrint(idToken);
-    if (idToken == null) {
+    ref.read(authViewModelProvider).mobile;
+    final userId = user?.uid;
+    debugPrint('userId present in firestore: $userId');
+    if (userId == null) {
       state = state.copyWith(
         appStatus: AppStatus.unauthenticated,
       );
@@ -77,16 +88,36 @@ class AppRepository extends StateNotifier<AppState> {
       //   );
       // } else {
       //   // handle any other error here
-      //   // TODO: handle error
       //   debugPrint('Error while fetching user data');
       //   debugPrint(response.toString());
       // }
-      state = state.copyWith(
-        authUser: user,
-        appStatus: AppStatus.authenticatedWithUserData,
-      );
-      debugPrint('user phone number: ${user?.phoneNumber}');
+
+      await _checkIfUserDataExists(userId);
+      if (!state.userDataExists) {
+        state = state.copyWith(
+          authUser: user,
+          appStatus: AppStatus.authenticatedWithNoUserData,
+        );
+        debugPrint('user data is missing in firestore');
+      } else {
+        state = state.copyWith(
+          authUser: user,
+          appStatus: AppStatus.authenticatedWithUserData,
+        );
+        debugPrint('user data exist in firestore');
+      }
     }
+  }
+
+  Future<void> _checkIfUserDataExists(String userId) async {
+    await firestore.collection('users').doc(userId).get().then(
+      (value) {
+        debugPrint(value.data().toString());
+        if (value.data() != null) {
+          state = state.copyWith(userDataExists: true);
+        }
+      },
+    );
   }
 }
 
@@ -94,6 +125,7 @@ class AppRepository extends StateNotifier<AppState> {
 class AppState with _$AppState {
   const factory AppState({
     @Default(null) User? authUser,
+    @Default(false) bool userDataExists,
     @Default(AppStatus.initial) AppStatus? appStatus,
   }) = _AppState;
 }

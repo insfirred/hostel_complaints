@@ -47,7 +47,7 @@ class _AuthViewState extends ConsumerState<AuthView> {
       if (next.appStatus == AppStatus.authenticatedWithUserData) {
         context.replaceRoute(const HomeRoute());
       } else if (next.appStatus == AppStatus.authenticatedWithNoUserData) {
-        context.replaceRoute(const CreateProfileRoute());
+        context.replaceRoute(const CreateUserRoute());
       } else if (next.appStatus ==
           AppStatus.authenticatedButNoInternetConnection) {
         // TODO: Create a no internet route...

@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hostel_complaints/src/logic/services/firebase_auth.dart';
+import 'package:hostel_complaints/src/ui/create_user/create_user_view_model.dart';
 
 import '../../constants/constants.dart';
 
@@ -12,13 +13,16 @@ final authViewModelProvider =
     StateNotifierProvider.autoDispose<AuthViewModel, AuthViewState>(
   (ref) => AuthViewModel(
     firebaseAuth: ref.watch(firebaseAuthProvider),
+    ref: ref,
   ),
 );
 
 class AuthViewModel extends StateNotifier<AuthViewState> {
   final FirebaseAuth firebaseAuth;
+  final AutoDisposeStateNotifierProviderRef ref;
   AuthViewModel({
     required this.firebaseAuth,
+    required this.ref,
   }) : super(const AuthViewState());
 
   /// returns whether back navigation should be triggered or not
@@ -98,7 +102,8 @@ class AuthViewModel extends StateNotifier<AuthViewState> {
           smsCode: state.otp,
         ),
       );
-      debugPrint('user signed succesfully');
+      _setMobileInCreateViewModel();
+      debugPrint('user signed succesfully manually.....');
     } catch (e) {
       debugPrint(e.toString());
       _setError('Invalid OTP entered.');
@@ -159,7 +164,8 @@ class AuthViewModel extends StateNotifier<AuthViewState> {
   _onVerificationCompleted(PhoneAuthCredential credential) async {
     try {
       await firebaseAuth.signInWithCredential(credential);
-      debugPrint('user signed succesfully');
+      _setMobileInCreateViewModel();
+      debugPrint('user signed succesfully automatically...');
     } catch (e) {
       debugPrint(e.toString());
       _setError('Unable to sign in!');
@@ -170,6 +176,9 @@ class AuthViewModel extends StateNotifier<AuthViewState> {
         status: AuthViewStatus.error,
         error: errorMessage,
       );
+
+  _setMobileInCreateViewModel() =>
+      ref.read(createUserViewModelProvider.notifier).setMobile(state.mobile);
 }
 
 @freezed
