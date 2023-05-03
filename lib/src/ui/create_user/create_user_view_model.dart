@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:hostel_complaints/src/models/firestore_models.dart/room_data.dart';
 
 // 🌎 Project imports:
 import '../../enums/enums.dart';
@@ -34,76 +35,13 @@ class CreateUserViewModel extends StateNotifier<CreateUserViewState> {
 
   onSubmitPressed() async {
     if (state.username.length >= 3) {
-      // setting user data in user collection
-      await firebaseFirestore
-          .collection('users')
-          .doc(ref.read(appRepositoryProvider).authUser?.uid)
-          .set(
-            UserData(
-              name: state.username,
-              mobile: state.mobile,
-              roomNumber: state.selectedStaytype == StayType.Room
-                  ? int.tryParse(
-                        state.selectedRoomNumber.toString().substring(8),
-                      ) ??
-                      -1
-                  : null,
-              dormitoryNumber: state.selectedStaytype == StayType.Dormitory
-                  ? int.tryParse(
-                        state.selectedDormitoryNumber.toString().substring(11),
-                      ) ??
-                      -1
-                  : null,
-              floor: state.selectedFloor.name,
-              stayType: state.selectedStaytype.name,
-            ).toJson(),
-            SetOptions(merge: true),
-          );
-
-      // List members =
-      //     await ref.read(appRepositoryProvider.notifier).fetchMembersInRoom(
-      //           state.selectedRoomNumber.toString().substring(8),
-      //         );
-
-      // if (members.length < 3) {
-      //   members.add(
-      //     {
-      //       'id': userId,
-      //       'name': state.username,
-      //     },
-      //   );
-      //   // setting the members list in [rooms] collection
-      //   await firebaseFirestore
-      //       .collection('rooms')
-      //       .doc(state.selectedRoomNumber.toString().substring(8))
-      //       .set(
-      //     {
-      //       'room_number': state.selectedRoomNumber.toString().substring(8),
-      //       'members': members,
-      //     },
-      //     SetOptions(merge: true),
-      //   );
-
-      ref
-          .read(appRepositoryProvider.notifier)
-          .setAppStatus(AppStatus.authenticatedWithUserData);
-
-      //   } else {
-      //     debugPrint('Room Already Full');
-      //     _setError(
-      //       'This room is already having 3 members, Enter your correct room number.',
-      //     );
-      //   }
-      // } else {
-      //   await firebaseFirestore
-      //       .collection('users')
-      //       .doc(ref.read(appRepositoryProvider).authUser?.uid)
-      //       .set(
-      //     {
-      //       'dormitory_number': state.selectedDormitoryNumber.name,
-      //     },
-      //     SetOptions(merge: true),
-      //   );
+      _setUserDataInFirestore();
+      _setUserRoomDataInFirestore();
+      if (state.status == CreateUserPageStatus.noError) {
+        ref
+            .read(appRepositoryProvider.notifier)
+            .setAppStatus(AppStatus.authenticatedWithUserData);
+      }
     } else {
       _setError('Name should be at least of 3 characters');
     }
@@ -133,10 +71,104 @@ class CreateUserViewModel extends StateNotifier<CreateUserViewState> {
         selectedDormitoryNumber: dormitoryNumber,
         status: CreateUserPageStatus.noError,
       );
-  _setError(
-    String error,
-  ) =>
-      state = state.copyWith(
+
+  /// sets the user's data in users collection in firestore
+  _setUserDataInFirestore() async {
+    await firebaseFirestore
+        .collection('users')
+        .doc(ref.read(appRepositoryProvider).authUser?.uid)
+        .set(
+          UserData(
+            name: state.username,
+            mobile: state.mobile,
+            roomNumber: state.selectedStaytype == StayType.Room
+                ? int.tryParse(
+                      state.selectedRoomNumber.toString().substring(8),
+                    ) ??
+                    -1
+                : null,
+            dormitoryNumber: state.selectedStaytype == StayType.Dormitory
+                ? int.tryParse(
+                      state.selectedDormitoryNumber.toString().substring(11),
+                    ) ??
+                    -1
+                : null,
+            floor: state.selectedFloor.name,
+            stayType: state.selectedStaytype.name,
+          ).toJson(),
+          SetOptions(merge: true),
+        );
+  }
+
+  _setUserRoomDataInFirestore() async {
+    Map<String, dynamic>? selectedRoomData = await firebaseFirestore
+        .collection('rooms')
+        .doc(state.selectedRoomNumber.toString().substring(8))
+        .get()
+        .then((_) => _.data());
+
+    if (selectedRoomData == null) {
+      debugPrint('first member....');
+      // for first member
+      await firebaseFirestore
+          .collection('rooms')
+          .doc(state.selectedRoomNumber.toString().substring(8))
+          .set(
+            RoomData(
+              roomNumber: int.tryParse(
+                      state.selectedRoomNumber.toString().substring(8)) ??
+                  -1,
+              firstMemberId: ref.read(appRepositoryProvider).authUser?.uid,
+              firstMemberName: state.username,
+            ).toJson(),
+          );
+    } else {
+      if (selectedRoomData['second_member_id'] == null) {
+        // for second member
+        debugPrint('second member....');
+        await firebaseFirestore
+            .collection('rooms')
+            .doc(state.selectedRoomNumber.toString().substring(8))
+            .set(
+              RoomData(
+                roomNumber: int.tryParse(
+                        state.selectedRoomNumber.toString().substring(8)) ??
+                    -1,
+                firstMemberId: selectedRoomData['first_member_id'],
+                firstMemberName: selectedRoomData['first_member_name'],
+                secondMemberId: ref.read(appRepositoryProvider).authUser?.uid,
+                secondMemberName: state.username,
+              ).toJson(),
+              SetOptions(merge: true),
+            );
+      } else if (selectedRoomData['third_member_id'] == null) {
+        // for third member
+        debugPrint('third member....');
+        await firebaseFirestore
+            .collection('rooms')
+            .doc(state.selectedRoomNumber.toString().substring(8))
+            .set(
+              RoomData(
+                roomNumber: int.tryParse(
+                        state.selectedRoomNumber.toString().substring(8)) ??
+                    -1,
+                firstMemberId: selectedRoomData['first_member_id'],
+                firstMemberName: selectedRoomData['first_member_name'],
+                secondMemberId: selectedRoomData['second_member_id'],
+                secondMemberName: selectedRoomData['second_member_name'],
+                thirdMemberId: ref.read(appRepositoryProvider).authUser?.uid,
+                thirdMemberName: state.username,
+              ).toJson(),
+              SetOptions(merge: true),
+            );
+      } else {
+        debugPrint('This room already have three existing members......');
+        _setError('This room already have three existing members');
+      }
+    }
+  }
+
+  _setError(String error) => state = state.copyWith(
         errorMessage: error,
         status: CreateUserPageStatus.error,
       );

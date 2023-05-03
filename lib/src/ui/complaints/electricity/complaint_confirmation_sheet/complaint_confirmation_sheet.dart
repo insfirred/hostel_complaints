@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hostel_complaints/src/ui/complaints/electricity/complaint_confirmation_sheet/complaint_confirmation_sheet_model.dart';
 
 class ComplaintConfirmationSheet extends ConsumerWidget {
   const ComplaintConfirmationSheet({
@@ -12,6 +13,10 @@ class ComplaintConfirmationSheet extends ConsumerWidget {
     BuildContext context,
     WidgetRef ref,
   ) {
+    final complaintType = ref.watch(
+      complaintConfirmationSheetModelProvider.select((_) => _.complaintType),
+    );
+
     return Padding(
       padding: const EdgeInsets.all(20),
       child: Column(
@@ -29,18 +34,12 @@ class ComplaintConfirmationSheet extends ConsumerWidget {
             'Date',
             style: GoogleFonts.poppins(fontSize: 16),
           ),
-          // Text(
-          //   DateFormat('dd MMMM yyyy').format(
-          //     ref.read(complaintConfirmationSheetModelProvider).complaintDate,
-          //   ),
-          //   style: GoogleFonts.poppins(fontSize: 16),
-          // ),
           Text(
             'Complaint about',
             style: GoogleFonts.poppins(fontSize: 16),
           ),
           Text(
-            'Date',
+            '$complaintType',
             style: GoogleFonts.poppins(fontSize: 16),
           ),
           Text(

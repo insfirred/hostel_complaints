@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -65,6 +66,12 @@ class HomeView extends ConsumerWidget {
                     ElevatedButton(
                       onPressed: () {},
                       child: const Text('Carpentery'),
+                    ),
+                    ElevatedButton(
+                      onPressed: () {
+                        FirebaseAuth.instance.signOut();
+                      },
+                      child: const Text('sign out'),
                     ),
                   ],
                 ),
