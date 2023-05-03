@@ -34,6 +34,7 @@ class HomeViewModel extends StateNotifier<HomeViewState> {
   }
 
   _fetchUserDataFromFirestore() async {
+    _generateGreetingMessage();
     state = state.copyWith(status: HomeViewStatus.loading);
     var userDataMap = await firestore
         .collection('users')
@@ -45,12 +46,25 @@ class HomeViewModel extends StateNotifier<HomeViewState> {
     state = state.copyWith(userData: userData);
     state = state.copyWith(status: HomeViewStatus.loaded);
   }
+
+  /// sets the [greetingMessage] according to the current hour.
+  _generateGreetingMessage() {
+    DateTime now = DateTime.now();
+    if (now.hour >= 5 && now.hour <= 11) {
+      state = state.copyWith(greetingMessage: 'Good Morning');
+    } else if (now.hour >= 12 && now.hour <= 16) {
+      state = state.copyWith(greetingMessage: 'Good Afternoon');
+    } else {
+      state = state.copyWith(greetingMessage: 'Good Evening');
+    }
+  }
 }
 
 @freezed
 class HomeViewState with _$HomeViewState {
   const factory HomeViewState({
     UserData? userData,
+    String? greetingMessage,
     @Default(HomeViewStatus.loading) HomeViewStatus status,
     String? error,
   }) = _HomeViewState;

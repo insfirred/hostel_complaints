@@ -28,6 +28,10 @@ class HomeView extends ConsumerWidget {
       homeViewModelProvider.select((_) => _.status),
     );
 
+    final greetingMessage = ref.watch(
+      homeViewModelProvider.select((_) => _.greetingMessage),
+    );
+
     return Scaffold(
       body: SafeArea(
         child: status == HomeViewStatus.loading
@@ -39,7 +43,7 @@ class HomeView extends ConsumerWidget {
                   children: [
                     ExtraHeight(10),
                     Text(
-                      'Good Afternoon',
+                      greetingMessage ?? 'Good Afternoon',
                       style: GoogleFonts.poppins(
                         fontSize: 25,
                         fontWeight: FontWeight.w500,

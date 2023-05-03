@@ -17,6 +17,7 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$HomeViewState {
   UserData? get userData => throw _privateConstructorUsedError;
+  String? get greetingMessage => throw _privateConstructorUsedError;
   HomeViewStatus get status => throw _privateConstructorUsedError;
   String? get error => throw _privateConstructorUsedError;
 
@@ -31,7 +32,11 @@ abstract class $HomeViewStateCopyWith<$Res> {
           HomeViewState value, $Res Function(HomeViewState) then) =
       _$HomeViewStateCopyWithImpl<$Res, HomeViewState>;
   @useResult
-  $Res call({UserData? userData, HomeViewStatus status, String? error});
+  $Res call(
+      {UserData? userData,
+      String? greetingMessage,
+      HomeViewStatus status,
+      String? error});
 }
 
 /// @nodoc
@@ -48,6 +53,7 @@ class _$HomeViewStateCopyWithImpl<$Res, $Val extends HomeViewState>
   @override
   $Res call({
     Object? userData = freezed,
+    Object? greetingMessage = freezed,
     Object? status = null,
     Object? error = freezed,
   }) {
@@ -56,6 +62,10 @@ class _$HomeViewStateCopyWithImpl<$Res, $Val extends HomeViewState>
           ? _value.userData
           : userData // ignore: cast_nullable_to_non_nullable
               as UserData?,
+      greetingMessage: freezed == greetingMessage
+          ? _value.greetingMessage
+          : greetingMessage // ignore: cast_nullable_to_non_nullable
+              as String?,
       status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
@@ -76,7 +86,11 @@ abstract class _$$_HomeViewStateCopyWith<$Res>
       __$$_HomeViewStateCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({UserData? userData, HomeViewStatus status, String? error});
+  $Res call(
+      {UserData? userData,
+      String? greetingMessage,
+      HomeViewStatus status,
+      String? error});
 }
 
 /// @nodoc
@@ -91,6 +105,7 @@ class __$$_HomeViewStateCopyWithImpl<$Res>
   @override
   $Res call({
     Object? userData = freezed,
+    Object? greetingMessage = freezed,
     Object? status = null,
     Object? error = freezed,
   }) {
@@ -99,6 +114,10 @@ class __$$_HomeViewStateCopyWithImpl<$Res>
           ? _value.userData
           : userData // ignore: cast_nullable_to_non_nullable
               as UserData?,
+      greetingMessage: freezed == greetingMessage
+          ? _value.greetingMessage
+          : greetingMessage // ignore: cast_nullable_to_non_nullable
+              as String?,
       status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
@@ -115,10 +134,15 @@ class __$$_HomeViewStateCopyWithImpl<$Res>
 
 class _$_HomeViewState with DiagnosticableTreeMixin implements _HomeViewState {
   const _$_HomeViewState(
-      {this.userData, this.status = HomeViewStatus.loading, this.error});
+      {this.userData,
+      this.greetingMessage,
+      this.status = HomeViewStatus.loading,
+      this.error});
 
   @override
   final UserData? userData;
+  @override
+  final String? greetingMessage;
   @override
   @JsonKey()
   final HomeViewStatus status;
@@ -127,7 +151,7 @@ class _$_HomeViewState with DiagnosticableTreeMixin implements _HomeViewState {
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'HomeViewState(userData: $userData, status: $status, error: $error)';
+    return 'HomeViewState(userData: $userData, greetingMessage: $greetingMessage, status: $status, error: $error)';
   }
 
   @override
@@ -136,6 +160,7 @@ class _$_HomeViewState with DiagnosticableTreeMixin implements _HomeViewState {
     properties
       ..add(DiagnosticsProperty('type', 'HomeViewState'))
       ..add(DiagnosticsProperty('userData', userData))
+      ..add(DiagnosticsProperty('greetingMessage', greetingMessage))
       ..add(DiagnosticsProperty('status', status))
       ..add(DiagnosticsProperty('error', error));
   }
@@ -147,12 +172,15 @@ class _$_HomeViewState with DiagnosticableTreeMixin implements _HomeViewState {
             other is _$_HomeViewState &&
             (identical(other.userData, userData) ||
                 other.userData == userData) &&
+            (identical(other.greetingMessage, greetingMessage) ||
+                other.greetingMessage == greetingMessage) &&
             (identical(other.status, status) || other.status == status) &&
             (identical(other.error, error) || other.error == error));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, userData, status, error);
+  int get hashCode =>
+      Object.hash(runtimeType, userData, greetingMessage, status, error);
 
   @JsonKey(ignore: true)
   @override
@@ -164,11 +192,14 @@ class _$_HomeViewState with DiagnosticableTreeMixin implements _HomeViewState {
 abstract class _HomeViewState implements HomeViewState {
   const factory _HomeViewState(
       {final UserData? userData,
+      final String? greetingMessage,
       final HomeViewStatus status,
       final String? error}) = _$_HomeViewState;
 
   @override
   UserData? get userData;
+  @override
+  String? get greetingMessage;
   @override
   HomeViewStatus get status;
   @override
