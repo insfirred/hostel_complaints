@@ -60,6 +60,8 @@ class _CreateUserViewState extends ConsumerState<CreateUserView> {
       (previous, next) {
         if (next.appStatus == AppStatus.authenticatedWithUserData) {
           context.router.replace(const HomeRoute());
+        } else if (next.appStatus == AppStatus.unauthenticated) {
+          context.replaceRoute(const AuthRoute());
         }
       },
     );

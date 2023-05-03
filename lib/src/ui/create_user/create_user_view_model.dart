@@ -3,13 +3,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:hostel_complaints/src/models/firestore_models.dart/user_data.dart';
-import 'package:hostel_complaints/src/ui/auth/auth_view_model.dart';
 
 // 🌎 Project imports:
 import '../../enums/enums.dart';
 import '../../logic/repositories/app_repository.dart';
 import '../../logic/services/firestore.dart';
+import '../../models/firestore_models.dart/user_data.dart';
 
 part 'create_user_view_model.freezed.dart';
 
