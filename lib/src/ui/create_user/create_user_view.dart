@@ -1,5 +1,4 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -51,9 +50,9 @@ class _CreateUserViewState extends ConsumerState<CreateUserView> {
     final selectedDormitoryNumber = ref.watch(
       createUserViewModelProvider.select((_) => _.selectedDormitoryNumber),
     );
-    final errorMessage = ref.watch(
-      createUserViewModelProvider.select((_) => _.errorMessage),
-    );
+    // final errorMessage = ref.watch(
+    //   createUserViewModelProvider.select((_) => _.errorMessage),
+    // );
 
     ref.listen(
       appRepositoryProvider,
@@ -92,10 +91,12 @@ class _CreateUserViewState extends ConsumerState<CreateUserView> {
         }
 
         if (next.status == CreateUserPageStatus.error) {
-          debugPrint('The error is: $errorMessage');
+          debugPrint(
+              'The error is: ${ref.watch(createUserViewModelProvider).errorMessage}');
           showErrorMessage(
             context,
-            errorMessage ?? 'Something went wrong',
+            ref.watch(createUserViewModelProvider).errorMessage ??
+                'Something went wrong',
           );
         }
       },
@@ -180,12 +181,12 @@ class _CreateUserViewState extends ConsumerState<CreateUserView> {
                       .onSubmitPressed(),
                   child: const Text('Submit'),
                 ),
-                ElevatedButton(
-                  onPressed: () {
-                    FirebaseAuth.instance.signOut();
-                  },
-                  child: const Text('signout'),
-                ),
+                // ElevatedButton(
+                //   onPressed: () {
+                //     FirebaseAuth.instance.signOut();
+                //   },
+                //   child: const Text('signout'),
+                // ),
               ],
             ),
           ),

@@ -21,6 +21,7 @@ mixin _$CreateUserViewState {
   StayType get selectedStaytype => throw _privateConstructorUsedError;
   Floor get selectedFloor => throw _privateConstructorUsedError;
   dynamic get selectedRoomNumber => throw _privateConstructorUsedError;
+  RoomStatus get selectedRoomStatus => throw _privateConstructorUsedError;
   Dormitory get selectedDormitoryNumber => throw _privateConstructorUsedError;
   CreateUserPageStatus get status => throw _privateConstructorUsedError;
   String? get errorMessage => throw _privateConstructorUsedError;
@@ -42,6 +43,7 @@ abstract class $CreateUserViewStateCopyWith<$Res> {
       StayType selectedStaytype,
       Floor selectedFloor,
       dynamic selectedRoomNumber,
+      RoomStatus selectedRoomStatus,
       Dormitory selectedDormitoryNumber,
       CreateUserPageStatus status,
       String? errorMessage});
@@ -65,6 +67,7 @@ class _$CreateUserViewStateCopyWithImpl<$Res, $Val extends CreateUserViewState>
     Object? selectedStaytype = null,
     Object? selectedFloor = null,
     Object? selectedRoomNumber = freezed,
+    Object? selectedRoomStatus = null,
     Object? selectedDormitoryNumber = null,
     Object? status = null,
     Object? errorMessage = freezed,
@@ -90,6 +93,10 @@ class _$CreateUserViewStateCopyWithImpl<$Res, $Val extends CreateUserViewState>
           ? _value.selectedRoomNumber
           : selectedRoomNumber // ignore: cast_nullable_to_non_nullable
               as dynamic,
+      selectedRoomStatus: null == selectedRoomStatus
+          ? _value.selectedRoomStatus
+          : selectedRoomStatus // ignore: cast_nullable_to_non_nullable
+              as RoomStatus,
       selectedDormitoryNumber: null == selectedDormitoryNumber
           ? _value.selectedDormitoryNumber
           : selectedDormitoryNumber // ignore: cast_nullable_to_non_nullable
@@ -120,6 +127,7 @@ abstract class _$$_CreateUserViewStateCopyWith<$Res>
       StayType selectedStaytype,
       Floor selectedFloor,
       dynamic selectedRoomNumber,
+      RoomStatus selectedRoomStatus,
       Dormitory selectedDormitoryNumber,
       CreateUserPageStatus status,
       String? errorMessage});
@@ -141,6 +149,7 @@ class __$$_CreateUserViewStateCopyWithImpl<$Res>
     Object? selectedStaytype = null,
     Object? selectedFloor = null,
     Object? selectedRoomNumber = freezed,
+    Object? selectedRoomStatus = null,
     Object? selectedDormitoryNumber = null,
     Object? status = null,
     Object? errorMessage = freezed,
@@ -166,6 +175,10 @@ class __$$_CreateUserViewStateCopyWithImpl<$Res>
           ? _value.selectedRoomNumber
           : selectedRoomNumber // ignore: cast_nullable_to_non_nullable
               as dynamic,
+      selectedRoomStatus: null == selectedRoomStatus
+          ? _value.selectedRoomStatus
+          : selectedRoomStatus // ignore: cast_nullable_to_non_nullable
+              as RoomStatus,
       selectedDormitoryNumber: null == selectedDormitoryNumber
           ? _value.selectedDormitoryNumber
           : selectedDormitoryNumber // ignore: cast_nullable_to_non_nullable
@@ -193,6 +206,7 @@ class _$_CreateUserViewState
       this.selectedStaytype = StayType.Room,
       this.selectedFloor = Floor.F0,
       this.selectedRoomNumber = RoomF0.R1,
+      this.selectedRoomStatus = RoomStatus.rs000,
       this.selectedDormitoryNumber = Dormitory.D1,
       this.status = CreateUserPageStatus.noError,
       this.errorMessage});
@@ -214,6 +228,9 @@ class _$_CreateUserViewState
   final dynamic selectedRoomNumber;
   @override
   @JsonKey()
+  final RoomStatus selectedRoomStatus;
+  @override
+  @JsonKey()
   final Dormitory selectedDormitoryNumber;
   @override
   @JsonKey()
@@ -223,7 +240,7 @@ class _$_CreateUserViewState
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'CreateUserViewState(username: $username, mobile: $mobile, selectedStaytype: $selectedStaytype, selectedFloor: $selectedFloor, selectedRoomNumber: $selectedRoomNumber, selectedDormitoryNumber: $selectedDormitoryNumber, status: $status, errorMessage: $errorMessage)';
+    return 'CreateUserViewState(username: $username, mobile: $mobile, selectedStaytype: $selectedStaytype, selectedFloor: $selectedFloor, selectedRoomNumber: $selectedRoomNumber, selectedRoomStatus: $selectedRoomStatus, selectedDormitoryNumber: $selectedDormitoryNumber, status: $status, errorMessage: $errorMessage)';
   }
 
   @override
@@ -236,6 +253,7 @@ class _$_CreateUserViewState
       ..add(DiagnosticsProperty('selectedStaytype', selectedStaytype))
       ..add(DiagnosticsProperty('selectedFloor', selectedFloor))
       ..add(DiagnosticsProperty('selectedRoomNumber', selectedRoomNumber))
+      ..add(DiagnosticsProperty('selectedRoomStatus', selectedRoomStatus))
       ..add(DiagnosticsProperty(
           'selectedDormitoryNumber', selectedDormitoryNumber))
       ..add(DiagnosticsProperty('status', status))
@@ -256,6 +274,8 @@ class _$_CreateUserViewState
                 other.selectedFloor == selectedFloor) &&
             const DeepCollectionEquality()
                 .equals(other.selectedRoomNumber, selectedRoomNumber) &&
+            (identical(other.selectedRoomStatus, selectedRoomStatus) ||
+                other.selectedRoomStatus == selectedRoomStatus) &&
             (identical(
                     other.selectedDormitoryNumber, selectedDormitoryNumber) ||
                 other.selectedDormitoryNumber == selectedDormitoryNumber) &&
@@ -272,6 +292,7 @@ class _$_CreateUserViewState
       selectedStaytype,
       selectedFloor,
       const DeepCollectionEquality().hash(selectedRoomNumber),
+      selectedRoomStatus,
       selectedDormitoryNumber,
       status,
       errorMessage);
@@ -291,6 +312,7 @@ abstract class _CreateUserViewState implements CreateUserViewState {
       final StayType selectedStaytype,
       final Floor selectedFloor,
       final dynamic selectedRoomNumber,
+      final RoomStatus selectedRoomStatus,
       final Dormitory selectedDormitoryNumber,
       final CreateUserPageStatus status,
       final String? errorMessage}) = _$_CreateUserViewState;
@@ -305,6 +327,8 @@ abstract class _CreateUserViewState implements CreateUserViewState {
   Floor get selectedFloor;
   @override
   dynamic get selectedRoomNumber;
+  @override
+  RoomStatus get selectedRoomStatus;
   @override
   Dormitory get selectedDormitoryNumber;
   @override

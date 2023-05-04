@@ -23,7 +23,7 @@ class _SplashViewState extends ConsumerState<SplashView> {
     );
     return const Scaffold(
       body: Center(
-        child: Text('Splash'),
+        child: Text('Splash View'),
       ),
     );
   }
