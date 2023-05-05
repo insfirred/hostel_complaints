@@ -48,6 +48,9 @@ class ElectricityComplaintsView extends ConsumerWidget {
               SlideAction(
                 onSubmit: () async {
                   // file complaint
+                  ref
+                      .read(electricityComplaintViewModelProvider.notifier)
+                      .fileComplaintSlided();
                   await Future.delayed(const Duration(milliseconds: 500));
                   // showSuccessMessage(context, 'Complaint filed successfully');
                   // Navigator.pop(context);
@@ -58,8 +61,8 @@ class ElectricityComplaintsView extends ConsumerWidget {
                   color: Colors.white,
                 ),
                 height: 50,
-                sliderButtonIconSize: 10,
-                sliderButtonIconPadding: 12,
+                sliderButtonIconSize: 15,
+                sliderButtonIconPadding: 8,
               ),
             ],
           ),
@@ -145,10 +148,10 @@ class _ComplaintAboutState extends ConsumerState<_ComplaintAbout> {
           electricityComplaintViewModelProvider
               .select((_) => _.selectedComplaintType),
         ) ==
-        ComplaintType.Others;
+        ElectricityComplaintType.Others;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: ComplaintType.values
+      children: ElectricityComplaintType.values
           .map(
             (complaintType) => Row(
               children: [
@@ -167,7 +170,8 @@ class _ComplaintAboutState extends ConsumerState<_ComplaintAbout> {
                 ),
                 ExtraWidth(12),
                 if (showOthersTextField &&
-                    complaintType.index == ComplaintType.values.length - 1) ...[
+                    complaintType.index ==
+                        ElectricityComplaintType.values.length - 1) ...[
                   // showing the others text field only when user selects the others option
                   Expanded(
                     child: TextField(

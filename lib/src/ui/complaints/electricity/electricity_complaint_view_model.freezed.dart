@@ -17,10 +17,12 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$ElectricityComplaintViewState {
   DateTime get complaintDate => throw _privateConstructorUsedError;
-  ComplaintType? get selectedComplaintType =>
+  ElectricityComplaintType? get selectedComplaintType =>
       throw _privateConstructorUsedError;
   String? get others => throw _privateConstructorUsedError;
   String? get description => throw _privateConstructorUsedError;
+  ElectricityComplaintViewStatus get status =>
+      throw _privateConstructorUsedError;
   String? get errorMessage => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -38,9 +40,10 @@ abstract class $ElectricityComplaintViewStateCopyWith<$Res> {
   @useResult
   $Res call(
       {DateTime complaintDate,
-      ComplaintType? selectedComplaintType,
+      ElectricityComplaintType? selectedComplaintType,
       String? others,
       String? description,
+      ElectricityComplaintViewStatus status,
       String? errorMessage});
 }
 
@@ -62,6 +65,7 @@ class _$ElectricityComplaintViewStateCopyWithImpl<$Res,
     Object? selectedComplaintType = freezed,
     Object? others = freezed,
     Object? description = freezed,
+    Object? status = null,
     Object? errorMessage = freezed,
   }) {
     return _then(_value.copyWith(
@@ -72,7 +76,7 @@ class _$ElectricityComplaintViewStateCopyWithImpl<$Res,
       selectedComplaintType: freezed == selectedComplaintType
           ? _value.selectedComplaintType
           : selectedComplaintType // ignore: cast_nullable_to_non_nullable
-              as ComplaintType?,
+              as ElectricityComplaintType?,
       others: freezed == others
           ? _value.others
           : others // ignore: cast_nullable_to_non_nullable
@@ -81,6 +85,10 @@ class _$ElectricityComplaintViewStateCopyWithImpl<$Res,
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
               as String?,
+      status: null == status
+          ? _value.status
+          : status // ignore: cast_nullable_to_non_nullable
+              as ElectricityComplaintViewStatus,
       errorMessage: freezed == errorMessage
           ? _value.errorMessage
           : errorMessage // ignore: cast_nullable_to_non_nullable
@@ -100,9 +108,10 @@ abstract class _$$_ElectricityComplaintViewStateCopyWith<$Res>
   @useResult
   $Res call(
       {DateTime complaintDate,
-      ComplaintType? selectedComplaintType,
+      ElectricityComplaintType? selectedComplaintType,
       String? others,
       String? description,
+      ElectricityComplaintViewStatus status,
       String? errorMessage});
 }
 
@@ -123,6 +132,7 @@ class __$$_ElectricityComplaintViewStateCopyWithImpl<$Res>
     Object? selectedComplaintType = freezed,
     Object? others = freezed,
     Object? description = freezed,
+    Object? status = null,
     Object? errorMessage = freezed,
   }) {
     return _then(_$_ElectricityComplaintViewState(
@@ -133,7 +143,7 @@ class __$$_ElectricityComplaintViewStateCopyWithImpl<$Res>
       selectedComplaintType: freezed == selectedComplaintType
           ? _value.selectedComplaintType
           : selectedComplaintType // ignore: cast_nullable_to_non_nullable
-              as ComplaintType?,
+              as ElectricityComplaintType?,
       others: freezed == others
           ? _value.others
           : others // ignore: cast_nullable_to_non_nullable
@@ -142,6 +152,10 @@ class __$$_ElectricityComplaintViewStateCopyWithImpl<$Res>
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
               as String?,
+      status: null == status
+          ? _value.status
+          : status // ignore: cast_nullable_to_non_nullable
+              as ElectricityComplaintViewStatus,
       errorMessage: freezed == errorMessage
           ? _value.errorMessage
           : errorMessage // ignore: cast_nullable_to_non_nullable
@@ -159,22 +173,26 @@ class _$_ElectricityComplaintViewState
       this.selectedComplaintType,
       this.others,
       this.description,
+      this.status = ElectricityComplaintViewStatus.noError,
       this.errorMessage});
 
   @override
   final DateTime complaintDate;
   @override
-  final ComplaintType? selectedComplaintType;
+  final ElectricityComplaintType? selectedComplaintType;
   @override
   final String? others;
   @override
   final String? description;
   @override
+  @JsonKey()
+  final ElectricityComplaintViewStatus status;
+  @override
   final String? errorMessage;
 
   @override
   String toString() {
-    return 'ElectricityComplaintViewState(complaintDate: $complaintDate, selectedComplaintType: $selectedComplaintType, others: $others, description: $description, errorMessage: $errorMessage)';
+    return 'ElectricityComplaintViewState(complaintDate: $complaintDate, selectedComplaintType: $selectedComplaintType, others: $others, description: $description, status: $status, errorMessage: $errorMessage)';
   }
 
   @override
@@ -189,13 +207,14 @@ class _$_ElectricityComplaintViewState
             (identical(other.others, others) || other.others == others) &&
             (identical(other.description, description) ||
                 other.description == description) &&
+            (identical(other.status, status) || other.status == status) &&
             (identical(other.errorMessage, errorMessage) ||
                 other.errorMessage == errorMessage));
   }
 
   @override
   int get hashCode => Object.hash(runtimeType, complaintDate,
-      selectedComplaintType, others, description, errorMessage);
+      selectedComplaintType, others, description, status, errorMessage);
 
   @JsonKey(ignore: true)
   @override
@@ -209,19 +228,22 @@ abstract class _ElectricityComplaintViewState
     implements ElectricityComplaintViewState {
   const factory _ElectricityComplaintViewState(
       {required final DateTime complaintDate,
-      final ComplaintType? selectedComplaintType,
+      final ElectricityComplaintType? selectedComplaintType,
       final String? others,
       final String? description,
+      final ElectricityComplaintViewStatus status,
       final String? errorMessage}) = _$_ElectricityComplaintViewState;
 
   @override
   DateTime get complaintDate;
   @override
-  ComplaintType? get selectedComplaintType;
+  ElectricityComplaintType? get selectedComplaintType;
   @override
   String? get others;
   @override
   String? get description;
+  @override
+  ElectricityComplaintViewStatus get status;
   @override
   String? get errorMessage;
   @override
