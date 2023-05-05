@@ -26,10 +26,6 @@ class ElectricityComplaintsView extends ConsumerWidget {
       }
     });
 
-    final status = ref.watch(
-      electricityComplaintViewModelProvider.select((_) => _.status),
-    );
-
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -68,8 +64,7 @@ class ElectricityComplaintsView extends ConsumerWidget {
                   await ref
                       .read(electricityComplaintViewModelProvider.notifier)
                       .fileComplaintSlided();
-                  print(
-                      ref.watch(electricityComplaintViewModelProvider).status);
+
                   if (ref.watch(electricityComplaintViewModelProvider).status ==
                       ElectricityComplaintViewStatus.noError) {
                     showSuccessMessage(context, 'Complaint filed successfully');
