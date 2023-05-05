@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hostel_complaints/src/logic/services/firestore.dart';
+import 'package:hostel_complaints/src/models/firestore_models.dart/complaint_data.dart';
 import 'package:hostel_complaints/src/ui/home/home_view_model.dart';
 
 import '../../../logic/services/firebase_auth.dart';
@@ -31,7 +32,46 @@ class ElectricityComplaintViewModel
     required this.firebaseAuth,
     required this.firebaseFirestore,
     required this.ref,
-  }) : super(ElectricityComplaintViewState(complaintDate: DateTime.now()));
+  }) : super(ElectricityComplaintViewState(complaintDate: DateTime.now())) {
+    _fetchComplaints();
+  }
+
+  fileComplaintSlided() async {
+    _validation();
+    if (state.status == ElectricityComplaintViewStatus.noError) {
+      final currentComplaintData = ComplaintData(
+        roomNumber: ref.read(homeViewModelProvider).userData!.roomNumber!,
+        date: state.complaintDate,
+        complaintType: state.selectedComplaintType.toString().substring(25),
+        others: state.others,
+        description: state.description,
+      );
+
+      List<ComplaintData> tempList = [];
+      for (ComplaintData complaint in state.selectedRoomComplaintsList) {
+        tempList.add(complaint);
+      }
+      print('before adding: $tempList');
+
+      // adds the current complaint data in complaints list.
+      tempList.add(currentComplaintData);
+
+      // sets updated list in state
+      _updateComplaintsList(tempList);
+      print('after adding: ${state.selectedRoomComplaintsList}');
+
+      await firebaseFirestore
+          .collection('complaints')
+          .doc(ref.read(homeViewModelProvider).userData!.roomNumber.toString())
+          .set(
+        {
+          'complaints': state.selectedRoomComplaintsList
+              .map((complaint) => complaint.toJson())
+              .toList(),
+        },
+      );
+    }
+  }
 
   setComplaintType(int index) => state = state.copyWith(
         selectedComplaintType: ElectricityComplaintType.values[index],
@@ -45,17 +85,11 @@ class ElectricityComplaintViewModel
         description: text,
       );
 
-  fileComplaintSlided() {
-    _validation();
-    if (state.status == ElectricityComplaintViewStatus.noError) {
-      // TODO: Set complaint data in firestore
-      // firebaseFirestore
-      //     .collection('complaints')
-      //     .doc(ref.read(homeViewModelProvider).userData!.roomNumber.toString())
-      //     .set(data);
-    }
-  }
+  _updateComplaintsList(List<ComplaintData> list) => state = state.copyWith(
+        selectedRoomComplaintsList: list,
+      );
 
+  /// It validates complaint type and others field.
   _validation() {
     if (state.selectedComplaintType == null) {
       _setError('Select your complaint type');
@@ -63,6 +97,38 @@ class ElectricityComplaintViewModel
     if (state.selectedComplaintType == ElectricityComplaintType.Others &&
         (state.others == null || state.others!.isEmpty)) {
       _setError('Enter your other field');
+    }
+  }
+
+  /// It fetchs users room all complaints list.
+  _fetchComplaints() async {
+    List<dynamic>? complaintsList;
+    try {
+      await firebaseFirestore
+          .collection('complaints')
+          .doc(ref.read(homeViewModelProvider).userData!.roomNumber.toString())
+          .get()
+          .then(
+        (snapshot) {
+          List<dynamic>? tempComplaintsList = snapshot.data()?['complaints'];
+          complaintsList = tempComplaintsList;
+        },
+      );
+    } catch (e) {
+      _setError('Something went wrong');
+      print(e);
+    }
+
+    if (complaintsList == null) {
+      state = state.copyWith(selectedRoomComplaintsList: []);
+    } else {
+      state = state.copyWith(
+        selectedRoomComplaintsList: complaintsList!.map(
+          (complaint) {
+            return ComplaintData.fromJson(complaint);
+          },
+        ).toList(),
+      );
     }
   }
 
@@ -81,6 +147,7 @@ class ElectricityComplaintViewState with _$ElectricityComplaintViewState {
     ElectricityComplaintType? selectedComplaintType,
     String? others,
     String? description,
+    @Default([]) List<ComplaintData> selectedRoomComplaintsList,
     @Default(ElectricityComplaintViewStatus.noError)
         ElectricityComplaintViewStatus status,
     String? errorMessage,

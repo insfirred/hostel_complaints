@@ -9,7 +9,7 @@ part of 'complaint_data.dart';
 ComplaintData _$ComplaintDataFromJson(Map<String, dynamic> json) =>
     ComplaintData(
       roomNumber: json['room_number'] as int,
-      date: json['date'] as String,
+      date: timestampToDateTime(json['date'] as Timestamp?),
       complaintType: json['complaint_type'] as String,
       others: json['others'] as String?,
       description: json['description'] as String?,
@@ -19,7 +19,7 @@ ComplaintData _$ComplaintDataFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$ComplaintDataToJson(ComplaintData instance) =>
     <String, dynamic>{
       'room_number': instance.roomNumber,
-      'date': instance.date,
+      'date': dateTimeToTimestamp(instance.date),
       'complaint_type': instance.complaintType,
       'others': instance.others,
       'description': instance.description,

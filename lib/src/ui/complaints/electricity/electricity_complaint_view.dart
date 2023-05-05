@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hostel_complaints/src/utils/snackbar_utils.dart';
 import 'package:intl/intl.dart';
 import 'package:slide_to_act/slide_to_act.dart';
 
@@ -12,6 +13,15 @@ class ElectricityComplaintsView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    ref.listen(electricityComplaintViewModelProvider, (previous, next) {
+      if (previous?.status == ElectricityComplaintViewStatus.error) {
+        showErrorMessage(
+          context,
+          ref.watch(electricityComplaintViewModelProvider).errorMessage ??
+              'Something went wrong',
+        );
+      }
+    });
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(

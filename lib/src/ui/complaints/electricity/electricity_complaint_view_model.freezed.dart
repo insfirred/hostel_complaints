@@ -21,6 +21,8 @@ mixin _$ElectricityComplaintViewState {
       throw _privateConstructorUsedError;
   String? get others => throw _privateConstructorUsedError;
   String? get description => throw _privateConstructorUsedError;
+  List<ComplaintData> get selectedRoomComplaintsList =>
+      throw _privateConstructorUsedError;
   ElectricityComplaintViewStatus get status =>
       throw _privateConstructorUsedError;
   String? get errorMessage => throw _privateConstructorUsedError;
@@ -43,6 +45,7 @@ abstract class $ElectricityComplaintViewStateCopyWith<$Res> {
       ElectricityComplaintType? selectedComplaintType,
       String? others,
       String? description,
+      List<ComplaintData> selectedRoomComplaintsList,
       ElectricityComplaintViewStatus status,
       String? errorMessage});
 }
@@ -65,6 +68,7 @@ class _$ElectricityComplaintViewStateCopyWithImpl<$Res,
     Object? selectedComplaintType = freezed,
     Object? others = freezed,
     Object? description = freezed,
+    Object? selectedRoomComplaintsList = null,
     Object? status = null,
     Object? errorMessage = freezed,
   }) {
@@ -85,6 +89,10 @@ class _$ElectricityComplaintViewStateCopyWithImpl<$Res,
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
               as String?,
+      selectedRoomComplaintsList: null == selectedRoomComplaintsList
+          ? _value.selectedRoomComplaintsList
+          : selectedRoomComplaintsList // ignore: cast_nullable_to_non_nullable
+              as List<ComplaintData>,
       status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
@@ -111,6 +119,7 @@ abstract class _$$_ElectricityComplaintViewStateCopyWith<$Res>
       ElectricityComplaintType? selectedComplaintType,
       String? others,
       String? description,
+      List<ComplaintData> selectedRoomComplaintsList,
       ElectricityComplaintViewStatus status,
       String? errorMessage});
 }
@@ -132,6 +141,7 @@ class __$$_ElectricityComplaintViewStateCopyWithImpl<$Res>
     Object? selectedComplaintType = freezed,
     Object? others = freezed,
     Object? description = freezed,
+    Object? selectedRoomComplaintsList = null,
     Object? status = null,
     Object? errorMessage = freezed,
   }) {
@@ -152,6 +162,10 @@ class __$$_ElectricityComplaintViewStateCopyWithImpl<$Res>
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
               as String?,
+      selectedRoomComplaintsList: null == selectedRoomComplaintsList
+          ? _value._selectedRoomComplaintsList
+          : selectedRoomComplaintsList // ignore: cast_nullable_to_non_nullable
+              as List<ComplaintData>,
       status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
@@ -173,8 +187,10 @@ class _$_ElectricityComplaintViewState
       this.selectedComplaintType,
       this.others,
       this.description,
+      final List<ComplaintData> selectedRoomComplaintsList = const [],
       this.status = ElectricityComplaintViewStatus.noError,
-      this.errorMessage});
+      this.errorMessage})
+      : _selectedRoomComplaintsList = selectedRoomComplaintsList;
 
   @override
   final DateTime complaintDate;
@@ -184,6 +200,16 @@ class _$_ElectricityComplaintViewState
   final String? others;
   @override
   final String? description;
+  final List<ComplaintData> _selectedRoomComplaintsList;
+  @override
+  @JsonKey()
+  List<ComplaintData> get selectedRoomComplaintsList {
+    if (_selectedRoomComplaintsList is EqualUnmodifiableListView)
+      return _selectedRoomComplaintsList;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_selectedRoomComplaintsList);
+  }
+
   @override
   @JsonKey()
   final ElectricityComplaintViewStatus status;
@@ -192,7 +218,7 @@ class _$_ElectricityComplaintViewState
 
   @override
   String toString() {
-    return 'ElectricityComplaintViewState(complaintDate: $complaintDate, selectedComplaintType: $selectedComplaintType, others: $others, description: $description, status: $status, errorMessage: $errorMessage)';
+    return 'ElectricityComplaintViewState(complaintDate: $complaintDate, selectedComplaintType: $selectedComplaintType, others: $others, description: $description, selectedRoomComplaintsList: $selectedRoomComplaintsList, status: $status, errorMessage: $errorMessage)';
   }
 
   @override
@@ -207,14 +233,24 @@ class _$_ElectricityComplaintViewState
             (identical(other.others, others) || other.others == others) &&
             (identical(other.description, description) ||
                 other.description == description) &&
+            const DeepCollectionEquality().equals(
+                other._selectedRoomComplaintsList,
+                _selectedRoomComplaintsList) &&
             (identical(other.status, status) || other.status == status) &&
             (identical(other.errorMessage, errorMessage) ||
                 other.errorMessage == errorMessage));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, complaintDate,
-      selectedComplaintType, others, description, status, errorMessage);
+  int get hashCode => Object.hash(
+      runtimeType,
+      complaintDate,
+      selectedComplaintType,
+      others,
+      description,
+      const DeepCollectionEquality().hash(_selectedRoomComplaintsList),
+      status,
+      errorMessage);
 
   @JsonKey(ignore: true)
   @override
@@ -231,6 +267,7 @@ abstract class _ElectricityComplaintViewState
       final ElectricityComplaintType? selectedComplaintType,
       final String? others,
       final String? description,
+      final List<ComplaintData> selectedRoomComplaintsList,
       final ElectricityComplaintViewStatus status,
       final String? errorMessage}) = _$_ElectricityComplaintViewState;
 
@@ -242,6 +279,8 @@ abstract class _ElectricityComplaintViewState
   String? get others;
   @override
   String? get description;
+  @override
+  List<ComplaintData> get selectedRoomComplaintsList;
   @override
   ElectricityComplaintViewStatus get status;
   @override

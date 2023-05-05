@@ -1,4 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+
+import '../../utils/date_timestamp_utils.dart';
 
 part 'complaint_data.g.dart';
 
@@ -6,7 +9,11 @@ part 'complaint_data.g.dart';
 class ComplaintData {
   @JsonKey(name: 'room_number')
   final int roomNumber;
-  final String date;
+  @JsonKey(
+    fromJson: timestampToDateTime,
+    toJson: dateTimeToTimestamp,
+  )
+  final DateTime date;
   @JsonKey(name: 'complaint_type')
   final String complaintType;
   final String? others;
