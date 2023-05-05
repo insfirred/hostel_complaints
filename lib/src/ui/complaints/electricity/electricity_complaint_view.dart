@@ -2,11 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
+import 'package:slide_to_act/slide_to_act.dart';
 
-import '../../../utils/bottom_sheet_util.dart';
 import '../../../utils/extra_space.dart';
 import 'electricity_complaint_view_model.dart';
-import './complaint_confirmation_sheet/complaint_confirmation_sheet.dart';
 
 class ElectricityComplaintsView extends ConsumerWidget {
   const ElectricityComplaintsView({super.key});
@@ -46,23 +45,21 @@ class ElectricityComplaintsView extends ConsumerWidget {
               const _FieldTitle(label: 'Description (optional)'),
               const _DescriptionField(),
               ExtraHeight(40),
-              ElevatedButton(
-                onPressed: () {
-                  hostelComplaintsBottomSheet(
-                    context: context,
-                    builder: (context) => const ComplaintConfirmationSheet(),
-                  );
-                  // hostelComplaintsBottomSheet(
-                  //   context: context,
-                  //   builder: (context) => Text('data'),
-                  // );
+              SlideAction(
+                onSubmit: () async {
+                  // file complaint
+                  await Future.delayed(const Duration(milliseconds: 500));
+                  // showSuccessMessage(context, 'Complaint filed successfully');
+                  // Navigator.pop(context);
                 },
-                child: Text(
-                  'Submit',
-                  style: GoogleFonts.poppins(
-                    fontSize: 14,
-                  ),
+                text: 'File Complaint',
+                textStyle: GoogleFonts.poppins(
+                  fontSize: 18,
+                  color: Colors.white,
                 ),
+                height: 50,
+                sliderButtonIconSize: 10,
+                sliderButtonIconPadding: 12,
               ),
             ],
           ),

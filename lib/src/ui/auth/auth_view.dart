@@ -7,7 +7,7 @@ import 'package:hostel_complaints/src/ui/auth/otp_verify/otp_verify_view.dart';
 import 'package:hostel_complaints/src/utils/extra_space.dart';
 
 import '../../logic/repositories/app_repository.dart';
-import '../../utils/snakbar_utils.dart';
+import '../../utils/snackbar_utils.dart';
 import 'auth_view_model.dart';
 
 class AuthView extends ConsumerStatefulWidget {

@@ -6,7 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import '../../enums/enums.dart';
 import '../../logic/repositories/app_repository.dart';
 import '../../routing/router.gr.dart';
-import '../../utils/snakbar_utils.dart';
+import '../../utils/snackbar_utils.dart';
 import 'create_user_view_model.dart';
 
 class CreateUserView extends ConsumerStatefulWidget {
