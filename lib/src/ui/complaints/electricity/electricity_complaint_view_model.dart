@@ -37,7 +37,7 @@ class ElectricityComplaintViewModel
   }
 
   fileComplaintSlided() async {
-    _validation();
+    await _validation();
     if (state.status == ElectricityComplaintViewStatus.noError) {
       final currentComplaintData = ComplaintData(
         roomNumber: ref.read(homeViewModelProvider).userData!.roomNumber!,

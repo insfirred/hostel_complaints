@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:hostel_complaints/src/utils/snackbar_utils.dart';
 import 'package:intl/intl.dart';
 import 'package:slide_to_act/slide_to_act.dart';
 
 import '../../../utils/extra_space.dart';
+import '../../../utils/snackbar_utils.dart';
 import 'electricity_complaint_view_model.dart';
 
 class ElectricityComplaintsView extends ConsumerWidget {
@@ -14,14 +14,22 @@ class ElectricityComplaintsView extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     ref.listen(electricityComplaintViewModelProvider, (previous, next) {
-      if (previous?.status == ElectricityComplaintViewStatus.error) {
+      if (next.status == ElectricityComplaintViewStatus.error) {
         showErrorMessage(
           context,
-          ref.watch(electricityComplaintViewModelProvider).errorMessage ??
+          ref.watch(
+                electricityComplaintViewModelProvider
+                    .select((_) => _.errorMessage),
+              ) ??
               'Something went wrong',
         );
       }
     });
+
+    final status = ref.watch(
+      electricityComplaintViewModelProvider.select((_) => _.status),
+    );
+
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -57,13 +65,18 @@ class ElectricityComplaintsView extends ConsumerWidget {
               ExtraHeight(40),
               SlideAction(
                 onSubmit: () async {
-                  // file complaint
-                  ref
+                  await ref
                       .read(electricityComplaintViewModelProvider.notifier)
                       .fileComplaintSlided();
-                  await Future.delayed(const Duration(milliseconds: 500));
-                  // showSuccessMessage(context, 'Complaint filed successfully');
-                  // Navigator.pop(context);
+                  print(
+                      ref.watch(electricityComplaintViewModelProvider).status);
+                  if (ref.watch(electricityComplaintViewModelProvider).status ==
+                      ElectricityComplaintViewStatus.noError) {
+                    showSuccessMessage(context, 'Complaint filed successfully');
+                    Navigator.pop(context);
+                  } else {
+                    print('yaha aana chahiye....');
+                  }
                 },
                 text: 'File Complaint',
                 textStyle: GoogleFonts.poppins(
@@ -73,6 +86,8 @@ class ElectricityComplaintsView extends ConsumerWidget {
                 height: 50,
                 sliderButtonIconSize: 15,
                 sliderButtonIconPadding: 8,
+
+                // reversed: true,
               ),
             ],
           ),
