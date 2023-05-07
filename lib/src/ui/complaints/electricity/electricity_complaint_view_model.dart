@@ -4,11 +4,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:hostel_complaints/src/logic/services/firestore.dart';
-import 'package:hostel_complaints/src/models/firestore_models.dart/complaint_data.dart';
-import 'package:hostel_complaints/src/ui/home/home_view_model.dart';
 
 import '../../../logic/services/firebase_auth.dart';
+import '../../../logic/services/firestore.dart';
+import '../../../models/firestore_models.dart/complaint_data.dart';
+import '../../home/home_view_model.dart';
 
 part 'electricity_complaint_view_model.freezed.dart';
 
@@ -38,6 +38,7 @@ class ElectricityComplaintViewModel
 
   fileComplaintSlided() async {
     await _validation();
+
     if (state.status == ElectricityComplaintViewStatus.noError) {
       final currentComplaintData = ComplaintData(
         roomNumber: ref.read(homeViewModelProvider).userData!.roomNumber!,
@@ -51,38 +52,44 @@ class ElectricityComplaintViewModel
       for (ComplaintData complaint in state.selectedRoomComplaintsList) {
         tempList.add(complaint);
       }
-      print('before adding: $tempList');
 
-      // adds the current complaint data in complaints list.
-      tempList.add(currentComplaintData);
+      await _isSelectedComplaintTypeAlreadyExistInFirestore(tempList);
 
-      // sets updated list in state
-      _updateComplaintsList(tempList);
-      print('after adding: ${state.selectedRoomComplaintsList}');
+      if (state.status == ElectricityComplaintViewStatus.noError) {
+        // adds the current complaint data in complaints list.
+        tempList.add(currentComplaintData);
 
-      await firebaseFirestore
-          .collection('complaints')
-          .doc(ref.read(homeViewModelProvider).userData!.roomNumber.toString())
-          .set(
-        {
-          'complaints': state.selectedRoomComplaintsList
-              .map((complaint) => complaint.toJson())
-              .toList(),
-        },
-      );
+        // sets updated list in state
+        _updateComplaintsList(tempList);
+
+        await firebaseFirestore
+            .collection('complaints')
+            .doc(
+                ref.read(homeViewModelProvider).userData!.roomNumber.toString())
+            .set(
+          {
+            'complaints': state.selectedRoomComplaintsList
+                .map((complaint) => complaint.toJson())
+                .toList(),
+          },
+        );
+      }
     }
   }
 
   setComplaintType(int index) => state = state.copyWith(
         selectedComplaintType: ElectricityComplaintType.values[index],
+        status: ElectricityComplaintViewStatus.noError,
       );
 
   setOthers(String text) => state = state.copyWith(
         others: text,
+        status: ElectricityComplaintViewStatus.noError,
       );
 
   setDescription(String text) => state = state.copyWith(
         description: text,
+        status: ElectricityComplaintViewStatus.noError,
       );
 
   _updateComplaintsList(List<ComplaintData> list) => state = state.copyWith(
@@ -129,6 +136,22 @@ class ElectricityComplaintViewModel
           },
         ).toList(),
       );
+    }
+  }
+
+  /// checks if selected complaint type complaint already exists or not.
+  _isSelectedComplaintTypeAlreadyExistInFirestore(
+    List<ComplaintData> list,
+  ) {
+    for (ComplaintData complaint in list) {
+      if (state.status == ElectricityComplaintViewStatus.error) break;
+      if (complaint.complaintType ==
+              state.selectedComplaintType.toString().substring(25) &&
+          complaint.complaintType != 'Others') {
+        _setError(
+          'The complaint for ${complaint.complaintType} is already pending,',
+        );
+      }
     }
   }
 

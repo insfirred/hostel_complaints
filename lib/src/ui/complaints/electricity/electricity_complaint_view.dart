@@ -124,8 +124,9 @@ class _DescriptionFieldState extends ConsumerState<_DescriptionField> {
   Widget build(BuildContext context) {
     return TextField(
       controller: controller,
-      decoration: const InputDecoration(
+      decoration: InputDecoration(
         hintText: 'What exactly is the problem?',
+        hintStyle: GoogleFonts.poppins(fontSize: 14),
       ),
     );
   }
