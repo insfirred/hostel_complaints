@@ -82,6 +82,26 @@ class ElectricityComplaintsView extends ConsumerWidget {
 
               //   // reversed: true,
               // ),
+              ElevatedButton(
+                onPressed: () async {
+                  await ref
+                      .read(electricityComplaintViewModelProvider.notifier)
+                      .fileComplaintSlided();
+
+                  if (ref.watch(electricityComplaintViewModelProvider).status ==
+                      ElectricityComplaintViewStatus.noError) {
+                    showSuccessMessage(context, 'Complaint filed successfully');
+                    Navigator.pop(context);
+                  } else {
+                    print(
+                      'yaha aana chahiye....',
+                    );
+                  }
+                },
+                child: const Text(
+                  "File complaint",
+                ),
+              ),
             ],
           ),
         ),
