@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
-import 'package:slide_to_act/slide_to_act.dart';
-
 import '../../../utils/extra_space.dart';
 import '../../../utils/snackbar_utils.dart';
 import 'electricity_complaint_view_model.dart';
@@ -59,8 +57,33 @@ class ElectricityComplaintsView extends ConsumerWidget {
               const _FieldTitle(label: 'Description (optional)'),
               const _DescriptionField(),
               ExtraHeight(40),
-              SlideAction(
-                onSubmit: () async {
+              // SlideAction(
+              //   onSubmit: () async {
+              //     await ref
+              //         .read(electricityComplaintViewModelProvider.notifier)
+              //         .fileComplaintSlided();
+
+              //     if (ref.watch(electricityComplaintViewModelProvider).status ==
+              //         ElectricityComplaintViewStatus.noError) {
+              //       showSuccessMessage(context, 'Complaint filed successfully');
+              //       Navigator.pop(context);
+              //     } else {
+              //       print('yaha aana chahiye....');
+              //     }
+              //   },
+              //   text: 'File Complaint',
+              //   textStyle: GoogleFonts.poppins(
+              //     fontSize: 18,
+              //     color: Colors.white,
+              //   ),
+              //   height: 50,
+              //   sliderButtonIconSize: 15,
+              //   sliderButtonIconPadding: 8,
+
+              //   // reversed: true,
+              // ),
+              ElevatedButton(
+                onPressed: () async {
                   await ref
                       .read(electricityComplaintViewModelProvider.notifier)
                       .fileComplaintSlided();
@@ -70,19 +93,14 @@ class ElectricityComplaintsView extends ConsumerWidget {
                     showSuccessMessage(context, 'Complaint filed successfully');
                     Navigator.pop(context);
                   } else {
-                    print('yaha aana chahiye....');
+                    print(
+                      'yaha aana chahiye....',
+                    );
                   }
                 },
-                text: 'File Complaint',
-                textStyle: GoogleFonts.poppins(
-                  fontSize: 18,
-                  color: Colors.white,
+                child: const Text(
+                  "File complaint",
                 ),
-                height: 50,
-                sliderButtonIconSize: 15,
-                sliderButtonIconPadding: 8,
-
-                // reversed: true,
               ),
             ],
           ),
