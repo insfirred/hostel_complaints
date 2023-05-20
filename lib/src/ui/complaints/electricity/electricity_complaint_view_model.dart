@@ -63,7 +63,7 @@ class ElectricityComplaintViewModel
         _updateComplaintsList(tempList);
 
         await firebaseFirestore
-            .collection('complaints')
+            .collection('electricity_complaints')
             .doc(
                 ref.read(homeViewModelProvider).userData!.roomNumber.toString())
             .set(
@@ -112,7 +112,7 @@ class ElectricityComplaintViewModel
     List<dynamic>? complaintsList;
     try {
       await firebaseFirestore
-          .collection('complaints')
+          .collection('electricity_complaints')
           .doc(ref.read(homeViewModelProvider).userData!.roomNumber.toString())
           .get()
           .then(
