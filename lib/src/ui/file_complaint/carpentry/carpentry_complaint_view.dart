@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:hostel_complaints/src/ui/complaints/carpentry/carpentry_complaint_view_model.dart';
 import 'package:hostel_complaints/src/utils/extra_space.dart';
 import 'package:hostel_complaints/src/utils/snackbar_utils.dart';
 import 'package:intl/intl.dart';
+
+import 'carpentry_complaint_view_model.dart';
 
 class CarpentryComplaintView extends ConsumerWidget {
   const CarpentryComplaintView({super.key});

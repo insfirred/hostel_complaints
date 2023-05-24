@@ -70,6 +70,13 @@ class HomeView extends ConsumerWidget {
                       child: const Text('Carpentery'),
                     ),
                     ElevatedButton(
+                      onPressed: () => showModalBottomSheet(
+                        context: context,
+                        builder: (context) => const _MyComplaintsSheet(),
+                      ),
+                      child: const Text('My Complaints'),
+                    ),
+                    ElevatedButton(
                       onPressed: () {
                         FirebaseAuth.instance.signOut();
                       },
@@ -78,6 +85,64 @@ class HomeView extends ConsumerWidget {
                   ],
                 ),
               ),
+      ),
+    );
+  }
+}
+
+class _MyComplaintsSheet extends StatelessWidget {
+  const _MyComplaintsSheet();
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: const BoxDecoration(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(30),
+          topRight: Radius.circular(30),
+        ),
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          const SizedBox(height: 20),
+          GestureDetector(
+            onTap: () =>
+                context.navigateTo(const ElectricityComplaintsListRoute()),
+            child: Container(
+              margin: const EdgeInsets.symmetric(horizontal: 20),
+              padding: const EdgeInsets.all(15),
+              width: double.infinity,
+              decoration: BoxDecoration(
+                color: const Color.fromARGB(255, 229, 234, 241),
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Text(
+                'Electricity',
+                style: GoogleFonts.poppins(
+                  fontSize: 15,
+                ),
+              ),
+            ),
+          ),
+          const SizedBox(height: 20),
+          Container(
+            margin: const EdgeInsets.symmetric(horizontal: 20),
+            padding: const EdgeInsets.all(15),
+            width: double.infinity,
+            decoration: BoxDecoration(
+              color: const Color.fromARGB(255, 229, 234, 241),
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Text(
+              'Carpentry',
+              style: GoogleFonts.poppins(
+                fontSize: 15,
+              ),
+            ),
+          ),
+          const SizedBox(height: 20),
+        ],
       ),
     );
   }
