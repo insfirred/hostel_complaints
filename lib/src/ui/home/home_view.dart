@@ -64,7 +64,9 @@ class HomeView extends ConsumerWidget {
                       child: const Text('Electricity'),
                     ),
                     ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        context.navigateTo(const CarpentryComplaintRoute());
+                      },
                       child: const Text('Carpentery'),
                     ),
                     ElevatedButton(
