@@ -1,29 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hostel_complaints/src/ui/complaints/carpentry/carpentry_complaint_view_model.dart';
+import 'package:hostel_complaints/src/utils/extra_space.dart';
+import 'package:hostel_complaints/src/utils/snackbar_utils.dart';
 import 'package:intl/intl.dart';
-import '../../../utils/extra_space.dart';
-import '../../../utils/snackbar_utils.dart';
-import 'electricity_complaint_view_model.dart';
 
-class ElectricityComplaintsView extends ConsumerWidget {
-  const ElectricityComplaintsView({super.key});
+class CarpentryComplaintView extends ConsumerWidget {
+  const CarpentryComplaintView({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    ref.listen(electricityComplaintViewModelProvider, (previous, next) {
-      if (next.status == ElectricityComplaintViewStatus.error) {
+    ref.listen(carpentryComplaintViewModelprovider, (previous, next) {
+      if (next.status == CarpentryComplaintViewStatus.error) {
         showErrorMessage(
           context,
           ref.watch(
-                electricityComplaintViewModelProvider
+                carpentryComplaintViewModelprovider
                     .select((_) => _.errorMessage),
               ) ??
               'Something went wrong',
         );
       }
     });
-
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -41,9 +40,9 @@ class ElectricityComplaintsView extends ConsumerWidget {
                   const Icon(Icons.date_range),
                   ExtraWidth(10),
                   Text(
-                    DateFormat('dd MMMM yyyy').format(
+                    DateFormat('dd MMM yyyy').format(
                       ref
-                          .read(electricityComplaintViewModelProvider)
+                          .read(carpentryComplaintViewModelprovider)
                           .complaintDate,
                     ),
                     style: GoogleFonts.poppins(fontSize: 16),
@@ -54,45 +53,18 @@ class ElectricityComplaintsView extends ConsumerWidget {
               const _FieldTitle(label: 'Complaint About'),
               const _ComplaintAbout(),
               ExtraHeight(32),
-              const _FieldTitle(label: 'Description (optional)'),
-              const _DescriptionField(),
+              const _FieldTitle(label: 'Descriptional (optional)'),
+              _DescriptionField(),
               ExtraHeight(40),
-              // SlideAction(
-              //   onSubmit: () async {
-              //     await ref
-              //         .read(electricityComplaintViewModelProvider.notifier)
-              //         .fileComplaintSlided();
-
-              //     if (ref.watch(electricityComplaintViewModelProvider).status ==
-              //         ElectricityComplaintViewStatus.noError) {
-              //       showSuccessMessage(context, 'Complaint filed successfully');
-              //       Navigator.pop(context);
-              //     } else {
-              //       print('yaha aana chahiye....');
-              //     }
-              //   },
-              //   text: 'File Complaint',
-              //   textStyle: GoogleFonts.poppins(
-              //     fontSize: 18,
-              //     color: Colors.white,
-              //   ),
-              //   height: 50,
-              //   sliderButtonIconSize: 15,
-              //   sliderButtonIconPadding: 8,
-
-              //   // reversed: true,
-              // ),
               Center(
                 child: ElevatedButton(
                   onPressed: () async {
                     await ref
-                        .read(electricityComplaintViewModelProvider.notifier)
+                        .read(carpentryComplaintViewModelprovider.notifier)
                         .fileComplaintSlided();
 
-                    if (ref
-                            .watch(electricityComplaintViewModelProvider)
-                            .status ==
-                        ElectricityComplaintViewStatus.noError) {
+                    if (ref.watch(carpentryComplaintViewModelprovider).status ==
+                        CarpentryComplaintViewStatus.noError) {
                       showSuccessMessage(
                           context, 'Complaint filed successfully');
                       Navigator.pop(context);
@@ -102,14 +74,30 @@ class ElectricityComplaintsView extends ConsumerWidget {
                       );
                     }
                   },
-                  child: const Text(
-                    "File complaint",
-                  ),
+                  child: const Text("File complaint"),
                 ),
-              ),
+              )
             ],
           ),
         ),
+      ),
+    );
+  }
+}
+
+class _FieldTitle extends StatelessWidget {
+  const _FieldTitle({
+    required this.label,
+  });
+
+  final String label;
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      label,
+      style: GoogleFonts.poppins(
+        fontSize: 18,
+        fontWeight: FontWeight.w500,
       ),
     );
   }
@@ -132,7 +120,7 @@ class _DescriptionFieldState extends ConsumerState<_DescriptionField> {
 
     controller.addListener(
       () => ref
-          .read(electricityComplaintViewModelProvider.notifier)
+          .read(carpentryComplaintViewModelprovider.notifier)
           .setDescription(controller.text),
     );
   }
@@ -159,19 +147,19 @@ class _ComplaintAbout extends ConsumerStatefulWidget {
   const _ComplaintAbout();
 
   @override
-  ConsumerState<_ComplaintAbout> createState() => _ComplaintAboutState();
+  ConsumerState<_ComplaintAbout> createState() => __ComplaintAboutState();
 }
 
-class _ComplaintAboutState extends ConsumerState<_ComplaintAbout> {
+class __ComplaintAboutState extends ConsumerState<_ComplaintAbout> {
   late TextEditingController controller;
-
   @override
   void initState() {
+    // TODO: implement initState
     super.initState();
     controller = TextEditingController();
     controller.addListener(
       () => ref
-          .read(electricityComplaintViewModelProvider.notifier)
+          .read(carpentryComplaintViewModelprovider.notifier)
           .setOthers(controller.text),
     );
   }
@@ -185,17 +173,17 @@ class _ComplaintAboutState extends ConsumerState<_ComplaintAbout> {
   @override
   Widget build(BuildContext context) {
     final selectedComplaintIndex = ref.watch(
-        electricityComplaintViewModelProvider
-            .select((_) => _.selectedComplaintType?.index));
-
+      carpentryComplaintViewModelprovider
+          .select((_) => _.selectedComplaintType?.index),
+    );
     final showOthersTextField = ref.watch(
-          electricityComplaintViewModelProvider
+          carpentryComplaintViewModelprovider
               .select((_) => _.selectedComplaintType),
         ) ==
-        ElectricityComplaintType.Others;
+        CarpentryComplaintType.Others;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: ElectricityComplaintType.values
+      children: CarpentryComplaintType.values
           .map(
             (complaintType) => Row(
               children: [
@@ -204,7 +192,7 @@ class _ComplaintAboutState extends ConsumerState<_ComplaintAbout> {
                   groupValue: selectedComplaintIndex,
                   onChanged: (value) {
                     ref
-                        .read(electricityComplaintViewModelProvider.notifier)
+                        .read(carpentryComplaintViewModelprovider.notifier)
                         .setComplaintType(value ?? 0);
                   },
                 ),
@@ -215,7 +203,7 @@ class _ComplaintAboutState extends ConsumerState<_ComplaintAbout> {
                 ExtraWidth(12),
                 if (showOthersTextField &&
                     complaintType.index ==
-                        ElectricityComplaintType.values.length - 1) ...[
+                        CarpentryComplaintType.values.length - 1) ...[
                   // showing the others text field only when user selects the others option
                   Expanded(
                     child: TextField(
@@ -230,25 +218,6 @@ class _ComplaintAboutState extends ConsumerState<_ComplaintAbout> {
             ),
           )
           .toList(),
-    );
-  }
-}
-
-class _FieldTitle extends StatelessWidget {
-  const _FieldTitle({
-    required this.label,
-  });
-
-  final String label;
-
-  @override
-  Widget build(BuildContext context) {
-    return Text(
-      label,
-      style: GoogleFonts.poppins(
-        fontSize: 18,
-        fontWeight: FontWeight.w500,
-      ),
     );
   }
 }

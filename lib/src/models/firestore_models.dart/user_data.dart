@@ -1,5 +1,4 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:hostel_complaints/src/enums/enums.dart';
 
 part 'user_data.g.dart';
 
