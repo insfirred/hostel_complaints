@@ -50,25 +50,6 @@ class AuthViewModel extends StateNotifier<AuthViewState> {
       return;
     }
 
-    // TODO: Chack if user already existed or not and show corresponding error.
-    // final apiResponse =
-    //     await apiService.checkIfUserExists('+91${state.mobile}');
-    // // if user is logging in, and account doesn't exist, show an error
-    // if (state.isLogin && apiResponse.status != ApiStatus.success) {
-    //   _setError(
-    //       'No account exists with this number! Please sign up to create an account.');
-    // }
-    // // if user is signing up, but account already exists, show an error
-    // else if (!state.isLogin && apiResponse.status == ApiStatus.success) {
-    //   _setError('Account already exists! Please login in to continue.');
-    // }
-    // // else, request for OTP, and let the user continue
-    // else {
-    //   state = state.copyWith(
-    //     status: AuthPageStatus.processingRequestOtp,
-    //   );
-    //   _verifyPhoneNumber();
-    // }
     state = state.copyWith(
       status: AuthViewStatus.processingRequestOtp,
     );

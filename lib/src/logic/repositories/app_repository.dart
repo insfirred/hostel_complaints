@@ -24,6 +24,7 @@ final appRepositoryProvider = StateNotifierProvider<AppRepository, AppState>(
 class AppRepository extends StateNotifier<AppState> {
   final FirebaseAuth firebaseAuth;
   final FirebaseFirestore firestore;
+  // ignore: unused_field
   late final StreamSubscription _subscription;
   final StateNotifierProviderRef ref;
 

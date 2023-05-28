@@ -1,9 +1,12 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hostel_complaints/src/utils/extra_space.dart';
 import 'package:hostel_complaints/src/utils/snackbar_utils.dart';
 import 'package:intl/intl.dart';
+import 'package:slide_to_act/slide_to_act.dart';
 
 import 'carpentry_complaint_view_model.dart';
 
@@ -55,29 +58,35 @@ class CarpentryComplaintView extends ConsumerWidget {
               const _ComplaintAbout(),
               ExtraHeight(32),
               const _FieldTitle(label: 'Descriptional (optional)'),
-              _DescriptionField(),
+              const _DescriptionField(),
               ExtraHeight(40),
-              Center(
-                child: ElevatedButton(
-                  onPressed: () async {
-                    await ref
-                        .read(carpentryComplaintViewModelprovider.notifier)
-                        .fileComplaintSlided();
+              SlideAction(
+                onSubmit: () async {
+                  await ref
+                      .read(carpentryComplaintViewModelprovider.notifier)
+                      .fileComplaintSlided();
 
-                    if (ref.watch(carpentryComplaintViewModelprovider).status ==
-                        CarpentryComplaintViewStatus.noError) {
-                      showSuccessMessage(
-                          context, 'Complaint filed successfully');
-                      Navigator.pop(context);
-                    } else {
-                      print(
-                        'yaha aana chahiye....',
-                      );
-                    }
-                  },
-                  child: const Text("File complaint"),
+                  if (ref.watch(carpentryComplaintViewModelprovider).status ==
+                      CarpentryComplaintViewStatus.noError) {
+                    showSuccessMessage(context, 'Complaint filed successfully');
+                    Navigator.pop(context);
+                  } else {
+                    print(
+                      'yaha aana chahiye....',
+                    );
+                  }
+                },
+                text: 'File Complaint',
+                textStyle: GoogleFonts.poppins(
+                  fontSize: 18,
+                  color: Colors.white,
                 ),
-              )
+                height: 50,
+                sliderButtonIconSize: 15,
+                sliderButtonIconPadding: 8,
+
+                // reversed: true,
+              ),
             ],
           ),
         ),
@@ -155,7 +164,6 @@ class __ComplaintAboutState extends ConsumerState<_ComplaintAbout> {
   late TextEditingController controller;
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     controller = TextEditingController();
     controller.addListener(

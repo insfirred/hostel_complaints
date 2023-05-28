@@ -2,6 +2,7 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -123,7 +124,7 @@ class ElectricityComplaintViewModel
       );
     } catch (e) {
       _setError('Something went wrong');
-      print(e);
+      debugPrint(e.toString());
     }
 
     if (complaintsList == null) {
