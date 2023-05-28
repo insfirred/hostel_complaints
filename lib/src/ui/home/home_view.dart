@@ -105,7 +105,7 @@ class _MyComplaintsSheet extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          const SizedBox(height: 20),
+          ExtraHeight(20),
           GestureDetector(
             onTap: () =>
                 context.navigateTo(const ElectricityComplaintsListRoute()),
@@ -119,29 +119,29 @@ class _MyComplaintsSheet extends StatelessWidget {
               ),
               child: Text(
                 'Electricity',
-                style: GoogleFonts.poppins(
-                  fontSize: 15,
-                ),
+                style: GoogleFonts.poppins(fontSize: 15),
               ),
             ),
           ),
-          const SizedBox(height: 20),
-          Container(
-            margin: const EdgeInsets.symmetric(horizontal: 20),
-            padding: const EdgeInsets.all(15),
-            width: double.infinity,
-            decoration: BoxDecoration(
-              color: const Color.fromARGB(255, 229, 234, 241),
-              borderRadius: BorderRadius.circular(10),
-            ),
-            child: Text(
-              'Carpentry',
-              style: GoogleFonts.poppins(
-                fontSize: 15,
+          ExtraHeight(20),
+          GestureDetector(
+            onTap: () =>
+                context.navigateTo(const CarpentryComplaintsListRoute()),
+            child: Container(
+              margin: const EdgeInsets.symmetric(horizontal: 20),
+              padding: const EdgeInsets.all(15),
+              width: double.infinity,
+              decoration: BoxDecoration(
+                color: const Color.fromARGB(255, 229, 234, 241),
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Text(
+                'Carpentry',
+                style: GoogleFonts.poppins(fontSize: 15),
               ),
             ),
           ),
-          const SizedBox(height: 20),
+          ExtraHeight(20),
         ],
       ),
     );

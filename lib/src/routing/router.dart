@@ -5,6 +5,7 @@ import '../ui/create_user/create_user_view.dart';
 import '../ui/file_complaint/carpentry/carpentry_complaint_view.dart';
 import '../ui/file_complaint/electricity/electricity_complaint_view.dart';
 import '../ui/home/home_view.dart';
+import '../ui/my_complaints/carpentry_complaints_list/carpentry_complaints_list_view.dart';
 import '../ui/my_complaints/electricity_complaints_list/electricity_complaints_list_view.dart';
 import '../ui/splash/splash_view.dart';
 
@@ -36,8 +37,12 @@ import '../ui/splash/splash_view.dart';
       page: CarpentryComplaintView,
     ),
     AutoRoute(
-      path: 'my-complaints',
+      path: 'electricity-complaints-list',
       page: ElectricityComplaintsListView,
+    ),
+    AutoRoute(
+      path: 'carpentry-complaints-list',
+      page: CarpentryComplaintsListView,
     )
   ],
 )

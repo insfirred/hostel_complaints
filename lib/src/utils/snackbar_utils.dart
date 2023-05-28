@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 // 📦 Package imports:
 import 'package:google_fonts/google_fonts.dart';
 
+import 'extra_space.dart';
+
 /// shows success message snack bar
 showSuccessMessage(
   BuildContext context,
@@ -64,7 +66,7 @@ _showSnackBar(
           ),
           child: Row(
             children: [
-              const SizedBox(width: 16),
+              ExtraWidth(16),
               Expanded(
                 child: Text(
                   message,
@@ -74,7 +76,7 @@ _showSnackBar(
                   ),
                 ),
               ),
-              const SizedBox(width: 16),
+              ExtraWidth(16),
               CupertinoButton(
                 padding: EdgeInsets.zero,
                 child: const Icon(

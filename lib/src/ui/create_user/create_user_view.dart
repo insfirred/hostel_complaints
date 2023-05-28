@@ -6,6 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import '../../enums/enums.dart';
 import '../../logic/repositories/app_repository.dart';
 import '../../routing/router.gr.dart';
+import '../../utils/extra_space.dart';
 import '../../utils/snackbar_utils.dart';
 import 'create_user_view_model.dart';
 
@@ -110,7 +111,7 @@ class _CreateUserViewState extends ConsumerState<CreateUserView> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const SizedBox(height: 50),
+                ExtraHeight(50),
                 TextField(
                   maxLength: 20,
                   controller: nameFieldController,
@@ -122,7 +123,7 @@ class _CreateUserViewState extends ConsumerState<CreateUserView> {
                     hintText: 'Your name',
                   ),
                 ),
-                const SizedBox(height: 40),
+                ExtraHeight(40),
 
                 // Stay Type Section
                 Text(
@@ -173,8 +174,7 @@ class _CreateUserViewState extends ConsumerState<CreateUserView> {
                   ),
                   _buildDormitoryDropdown(selectedDormitoryNumber),
                 ],
-
-                const SizedBox(height: 30),
+                ExtraHeight(30),
                 ElevatedButton(
                   onPressed: () => ref
                       .read(createUserViewModelProvider.notifier)

@@ -1,7 +1,12 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:slide_to_act/slide_to_act.dart';
+
 import '../../../utils/extra_space.dart';
 import '../../../utils/snackbar_utils.dart';
 import 'electricity_complaint_view_model.dart';
@@ -57,55 +62,32 @@ class ElectricityComplaintsView extends ConsumerWidget {
               const _FieldTitle(label: 'Description (optional)'),
               const _DescriptionField(),
               ExtraHeight(40),
-              // SlideAction(
-              //   onSubmit: () async {
-              //     await ref
-              //         .read(electricityComplaintViewModelProvider.notifier)
-              //         .fileComplaintSlided();
+              SlideAction(
+                onSubmit: () async {
+                  await ref
+                      .read(electricityComplaintViewModelProvider.notifier)
+                      .fileComplaintSlided();
 
-              //     if (ref.watch(electricityComplaintViewModelProvider).status ==
-              //         ElectricityComplaintViewStatus.noError) {
-              //       showSuccessMessage(context, 'Complaint filed successfully');
-              //       Navigator.pop(context);
-              //     } else {
-              //       print('yaha aana chahiye....');
-              //     }
-              //   },
-              //   text: 'File Complaint',
-              //   textStyle: GoogleFonts.poppins(
-              //     fontSize: 18,
-              //     color: Colors.white,
-              //   ),
-              //   height: 50,
-              //   sliderButtonIconSize: 15,
-              //   sliderButtonIconPadding: 8,
-
-              //   // reversed: true,
-              // ),
-              Center(
-                child: ElevatedButton(
-                  onPressed: () async {
-                    await ref
-                        .read(electricityComplaintViewModelProvider.notifier)
-                        .fileComplaintSlided();
-
-                    if (ref
-                            .watch(electricityComplaintViewModelProvider)
-                            .status ==
-                        ElectricityComplaintViewStatus.noError) {
-                      showSuccessMessage(
-                          context, 'Complaint filed successfully');
-                      Navigator.pop(context);
-                    } else {
-                      print(
-                        'yaha aana chahiye....',
-                      );
-                    }
-                  },
-                  child: const Text(
-                    "File complaint",
-                  ),
+                  if (ref.watch(electricityComplaintViewModelProvider).status ==
+                      ElectricityComplaintViewStatus.noError) {
+                    showSuccessMessage(context, 'Complaint filed successfully');
+                    Navigator.pop(context);
+                  } else {
+                    // TODO: If error is there, then modify SlideButton accordingly
+                    print(ref.watch(electricityComplaintViewModelProvider
+                        .select((_) => _.errorMessage)));
+                  }
+                },
+                text: 'File Complaint',
+                textStyle: GoogleFonts.poppins(
+                  fontSize: 18,
+                  color: Colors.white,
                 ),
+                height: 50,
+                sliderButtonIconSize: 15,
+                sliderButtonIconPadding: 8,
+
+                // reversed: true,
               ),
             ],
           ),
